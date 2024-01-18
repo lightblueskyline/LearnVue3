@@ -25,7 +25,7 @@ npm build
 
 ## 模板語法
 
-```csharp
+```js
 /**
 文本插值
 <span>Message: {{ msg }}</span>
@@ -83,5 +83,46 @@ v-on 指令，監聽 DOM 事件
 修饰符 Modifiers (修饰符是以点开头的特殊后缀，表明指令需要以一些特殊的方式被绑定)
 例如 .prevent 修饰符会告知 v-on 指令对触发的事件调用 event.preventDefault()
 <form @submit.prevent="onSubmit">...</form>
+ */
+```
+
+## 响应式基础
+
+```js
+/**
+声明响应式状态 ref()
+import { ref } from 'vue'
+const count = ref(0)
+ref() 接收参数，并将其包裹在一个带有 .value 属性的 ref 对象中返回
+const count = ref(0)
+console.log(count) // { value: 0 }
+console.log(count.value) // 0
+count.value++
+console.log(count.value) // 1
+[注意，在模板中使用 ref 时，我们不需要附加 .value]
+<script setup>
+import { ref } from 'vue'
+const count = ref(0)
+function increment() {
+  count.value++
+}
+</script>
+<template>
+  <button @click="increment">
+    {{ count }}
+  </button>
+</template>
+
+深层响应性
+import { ref } from 'vue'
+const obj = ref({
+  nested: { count: 0 },
+  arr: ['foo', 'bar']
+})
+function mutateDeeply() {
+  // 以下都会按照期望工作
+  obj.value.nested.count++
+  obj.value.arr.push('baz')
+}
  */
 ```

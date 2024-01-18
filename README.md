@@ -211,3 +211,35 @@ function mutateDeeply() {
  * <div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>
  */
 ```
+
+## [条件渲染](https://cn.vuejs.org/guide/essentials/conditional.html)
+
+```js
+/**
+ * v-if (表达式返回真值时才被渲染)
+ * <h1 v-if="awesome">Vue is awesome!</h1>
+ * 
+ * v-else
+ * <button @click="awesome = !awesome">Toggle</button>
+ * <h1 v-if="awesome">Vue is awesome!</h1>
+ * <h1 v-else>Oh no 😢</h1>
+ * 
+ * v-else-if
+ * <div v-if="type === 'A'">
+ *   A
+ * </div>
+ * <div v-else-if="type === 'B'">
+ *   B
+ * </div>
+ * <div v-else-if="type === 'C'">
+ *   C
+ * </div>
+ * <div v-else>
+ *   Not A/B/C
+ * </div>
+ * 
+ * v-show (按条件显示一个元素)
+ * (不同之处在于 v-show 会在 DOM 渲染中保留该元素；v-show 仅切换了该元素上名为 display 的 CSS 属性。)
+ * <h1 v-show="ok">Hello!</h1>
+ */
+```

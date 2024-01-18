@@ -12,7 +12,7 @@ git remote add origin https://github.com/lightblueskyline/LearnVue3.git
 git push -u origin master
 ```
 
-## 快速上手
+## [快速上手](https://cn.vuejs.org/guide/quick-start.html)
 
 ```ps
 npm create vue@latest
@@ -23,7 +23,7 @@ npm run dev
 npm build
 ```
 
-## 模板語法
+## [模板語法](https://cn.vuejs.org/guide/essentials/template-syntax.html)
 
 ```js
 /**
@@ -86,7 +86,7 @@ v-on 指令，監聽 DOM 事件
  */
 ```
 
-## 响应式基础
+## [响应式基础](https://cn.vuejs.org/guide/essentials/reactivity-fundamentals.html)
 
 ```js
 /**
@@ -124,5 +124,51 @@ function mutateDeeply() {
   obj.value.nested.count++
   obj.value.arr.push('baz')
 }
+ */
+```
+
+## [计算属性](https://cn.vuejs.org/guide/essentials/computed.html)
+
+```js
+/**
+ * [推荐使用计算属性来描述依赖响应式状态的复杂逻辑]
+ * <script setup>
+ * import { reactive, computed } from 'vue'
+ * const author = reactive({
+ *   name: 'John Doe',
+ *   books: [
+ *     'Vue 2 - Advanced Guide',
+ *     'Vue 3 - Basic Guide',
+ *     'Vue 4 - The Mystery'
+ *   ]
+ * })
+ * // 一个计算属性 ref
+ * const publishedBooksMessage = computed(() => {
+ *   return author.books.length > 0 ? 'Yes' : 'No'
+ * })
+ * </script>
+ * <template>
+ *   <p>Has published books:</p>
+ *   <span>{{ publishedBooksMessage }}</span>
+ * </template>
+ * Vue 的计算属性会自动追踪响应式依赖。publishedBooksMessage 依赖于 author.books，所以当 author.books 改变时，publishedBooksMessage 会同时更新。
+ * 
+ * 可写计算属性 (计算属性默认是只读的)
+ * <script setup>
+ * import { ref, computed } from 'vue'
+ * const firstName = ref('John')
+ * const lastName = ref('Doe')
+ * const fullName = computed({
+ *   // getter
+ *   get() {
+ *     return firstName.value + ' ' + lastName.value
+ *   },
+ *   // setter
+ *   set(newValue) {
+ *     // 注意：我们这里使用的是解构赋值语法
+ *     [firstName.value, lastName.value] = newValue.split(' ')
+ *   }
+ * })
+ * </script>
  */
 ```

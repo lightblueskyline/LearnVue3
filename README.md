@@ -172,3 +172,42 @@ function mutateDeeply() {
  * </script>
  */
 ```
+
+## [Class 与 Style 绑定](https://cn.vuejs.org/guide/essentials/class-and-style.html)
+
+```js
+/**
+ * 绑定 HTML class
+ * :class (v-bind:class 的缩写)
+ * <div :class="{ active: isActive }"></div>
+ * active 是否存在取决于数据属性 isActive 的真假值。
+ * const isActive = ref(true)
+ * const hasError = ref(false)
+ * <div
+ *   class="static"
+ *   :class="{ active: isActive, 'text-danger': hasError }"
+ * ></div>
+ * 渲染结果 -> <div class="static active"></div>
+ * 绑定数组
+ * const activeClass = ref('active')
+ * const errorClass = ref('text-danger')
+ * <div :class="[activeClass, errorClass]"></div>
+ * 渲染结果 -> <div class="active text-danger"></div>
+ * 
+ * 绑定内联样式
+ * 绑定对象
+ * const activeColor = ref('red')
+ * const fontSize = ref(30)
+ * <div :style="{ color: activeColor, fontSize: fontSize + 'px' }"></div>
+ * <div :style="{ 'font-size': fontSize + 'px' }"></div>
+ * const styleObject = reactive({
+ *   color: 'red',
+ *   fontSize: '13px'
+ * })
+ * <div :style="styleObject"></div>
+ * 绑定数组
+ * <div :style="[baseStyles, overridingStyles]"></div>
+ * 样式多值 (可以对一个样式属性提供多个 (不同前缀的) 值)
+ * <div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>
+ */
+```

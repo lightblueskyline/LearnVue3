@@ -27,62 +27,62 @@ npm build
 
 ```js
 /**
-文本插值
-<span>Message: {{ msg }}</span>
-
-Attribute 绑定
-響應式的綁定一個 attribute 應該使用 v-bind 指令
-<div v-bind:id="dynamicId"></div>
-簡寫
-<div :id="dynamicId"></div>
-
-布尔型 Attribute (依据 true / false 值来决定 attribute 是否应该存在于该元素上)
-<button :disabled="isButtonDisabled">Button</button>
-
-动态绑定多个值
-const objectOfAttrs = {
-  id: 'container',
-  class: 'wrapper'
-}
-通过不带参数的 v-bind，你可以将它们绑定到单个元素上
-<div v-bind="objectOfAttrs"></div>
-
-使用 JavaScript 表达式 (在文本插值中 (双大括号) / 在任何 Vue 指令 (以 v- 开头的特殊 attribute) attribute 的值中)
-{{ number + 1 }}
-{{ ok ? 'YES' : 'NO' }}
-{{ message.split('').reverse().join('') }}
-<div :id="`list-${id}`"></div>
-
-调用函数
-<time :title="toTitleDate(date)" :datetime="date">
-  {{ formatDate(date) }}
-</time>
-
-指令 Directives (一个指令的任务是在其表达式的值变化时响应式地更新 DOM)
-<p v-if="seen">Now you see me</p>
-
-参数 Arguments
-[用 v-bind 指令来响应式地更新一个 HTML attribute]
-<a v-bind:href="url"> ... </a>
-<!-- 简写 -->
-<a :href="url"> ... </a>
-v-on 指令，監聽 DOM 事件
-<a v-on:click="doSomething"> ... </a>
-<!-- 简写 -->
-<a @click="doSomething"> ... </a>
-
-动态参数 (需要包含在一对方括号内)
-<a v-bind:[attributeName]="url"> ... </a>
-<!-- 简写 -->
-<a :[attributeName]="url"> ... </a>
-将一个函数绑定到动态的事件名称上
-<a v-on:[eventName]="doSomething"> ... </a>
-<!-- 简写 -->
-<a @[eventName]="doSomething">
-
-修饰符 Modifiers (修饰符是以点开头的特殊后缀，表明指令需要以一些特殊的方式被绑定)
-例如 .prevent 修饰符会告知 v-on 指令对触发的事件调用 event.preventDefault()
-<form @submit.prevent="onSubmit">...</form>
+ * 文本插值
+ * <span>Message: {{ msg }}</span>
+ * 
+ * Attribute 绑定
+ * 響應式的綁定一個 attribute 應該使用 v-bind 指令
+ * <div v-bind:id="dynamicId"></div>
+ * 簡寫
+ * <div :id="dynamicId"></div>
+ * 
+ * 布尔型 Attribute (依据 true / false 值来决定 attribute 是否应该存在于该元素上)
+ * <button :disabled="isButtonDisabled">Button</button>
+ * 
+ * 动态绑定多个值
+ * const objectOfAttrs = {
+ *   id: 'container',
+ *   class: 'wrapper'
+ * }
+ * 通过不带参数的 v-bind，你可以将它们绑定到单个元素上
+ * <div v-bind="objectOfAttrs"></div>
+ * 
+ * 使用 JavaScript 表达式 (在文本插值中 (双大括号) / 在任何 Vue 指令 (以 v- 开头的特殊 attribute) attribute 的值中)
+ * {{ number + 1 }}
+ * {{ ok ? 'YES' : 'NO' }}
+ * {{ message.split('').reverse().join('') }}
+ * <div :id="`list-${id}`"></div>
+ * 
+ * 调用函数
+ * <time :title="toTitleDate(date)" :datetime="date">
+ *   {{ formatDate(date) }}
+ * </time>
+ * 
+ * 指令 Directives (一个指令的任务是在其表达式的值变化时响应式地更新 DOM)
+ * <p v-if="seen">Now you see me</p>
+ * 
+ * 参数 Arguments
+ * [用 v-bind 指令来响应式地更新一个 HTML attribute]
+ * <a v-bind:href="url"> ... </a>
+ * <!-- 简写 -->
+ * <a :href="url"> ... </a>
+ * v-on 指令，監聽 DOM 事件
+ * <a v-on:click="doSomething"> ... </a>
+ * <!-- 简写 -->
+ * <a @click="doSomething"> ... </a>
+ * 
+ * 动态参数 (需要包含在一对方括号内)
+ * <a v-bind:[attributeName]="url"> ... </a>
+ * <!-- 简写 -->
+ * <a :[attributeName]="url"> ... </a>
+ * 将一个函数绑定到动态的事件名称上
+ * <a v-on:[eventName]="doSomething"> ... </a>
+ * <!-- 简写 -->
+ * <a @[eventName]="doSomething">
+ * 
+ * 修饰符 Modifiers (修饰符是以点开头的特殊后缀，表明指令需要以一些特殊的方式被绑定)
+ * 例如 .prevent 修饰符会告知 v-on 指令对触发的事件调用 event.preventDefault()
+ * <form @submit.prevent="onSubmit">...</form>
  */
 ```
 
@@ -90,40 +90,40 @@ v-on 指令，監聽 DOM 事件
 
 ```js
 /**
-声明响应式状态 ref()
-import { ref } from 'vue'
-const count = ref(0)
-ref() 接收参数，并将其包裹在一个带有 .value 属性的 ref 对象中返回
-const count = ref(0)
-console.log(count) // { value: 0 }
-console.log(count.value) // 0
-count.value++
-console.log(count.value) // 1
-[注意，在模板中使用 ref 时，我们不需要附加 .value]
-<script setup>
-import { ref } from 'vue'
-const count = ref(0)
-function increment() {
-  count.value++
-}
-</script>
-<template>
-  <button @click="increment">
-    {{ count }}
-  </button>
-</template>
-
-深层响应性
-import { ref } from 'vue'
-const obj = ref({
-  nested: { count: 0 },
-  arr: ['foo', 'bar']
-})
-function mutateDeeply() {
-  // 以下都会按照期望工作
-  obj.value.nested.count++
-  obj.value.arr.push('baz')
-}
+ * 声明响应式状态 ref()
+ * import { ref } from 'vue'
+ * const count = ref(0)
+ * ref() 接收参数，并将其包裹在一个带有 .value 属性的 ref 对象中返回
+ * const count = ref(0)
+ * console.log(count) // { value: 0 }
+ * console.log(count.value) // 0
+ * count.value++
+ * console.log(count.value) // 1
+ * [注意，在模板中使用 ref 时，我们不需要附加 .value]
+ * <script setup>
+ * import { ref } from 'vue'
+ * const count = ref(0)
+ * function increment() {
+ *   count.value++
+ * }
+ * </script>
+ * <template>
+ *   <button @click="increment">
+ *     {{ count }}
+ *   </button>
+ * </template>
+ * 
+ * 深层响应性
+ * import { ref } from 'vue'
+ * const obj = ref({
+ *   nested: { count: 0 },
+ *   arr: ['foo', 'bar']
+ * })
+ * function mutateDeeply() {
+ *   // 以下都会按照期望工作
+ *   obj.value.nested.count++
+ *   obj.value.arr.push('baz')
+ * }
  */
 ```
 
@@ -241,5 +241,104 @@ function mutateDeeply() {
  * v-show (按条件显示一个元素)
  * (不同之处在于 v-show 会在 DOM 渲染中保留该元素；v-show 仅切换了该元素上名为 display 的 CSS 属性。)
  * <h1 v-show="ok">Hello!</h1>
+ */
+```
+
+## [列表渲染](https://cn.vuejs.org/guide/essentials/list.html)
+
+```js
+/**
+ * v-for (使用 item in items 形式的特殊语法)
+ * const items = ref([{ message: 'Foo' }, { message: 'Bar' }])
+ * <li v-for="item in items">
+ *   {{ item.message }}
+ * </li>
+ * ---
+ * const parentMessage = ref('Parent')
+ * const items = ref([{ message: 'Foo' }, { message: 'Bar' }])
+ * <li v-for="(item, index) in items">
+ *   {{ parentMessage }} - {{ index }} - {{ item.message }}
+ * </li>
+ * ---
+ * <li v-for="item in items">
+ *   <span v-for="childItem in item.children">
+ *     {{ item.message }} {{ childItem }}
+ *   </span>
+ * </li>
+ * --- 也可以使用 of 作为分隔符来替代 in
+ * <div v-for="item of items"></div>
+ * 
+ * v-for 与对象 (遍历的顺序会基于对该对象调用 Object.keys() 的返回值来决定。)
+ * const myObject = reactive({
+ *   title: 'How to do lists in Vue',
+ *   author: 'Jane Doe',
+ *   publishedAt: '2016-04-10'
+ * })
+ * <ul>
+ *   <li v-for="value in myObject">
+ *     {{ value }}
+ *   </li>
+ * </ul>
+ * <li v-for="(value, key) in myObject">
+ *   {{ key }}: {{ value }}
+ * </li>
+ * <li v-for="(value, key, index) in myObject">
+ *   {{ index }}. {{ key }}: {{ value }}
+ * </li>
+ * 
+ * 在 v-for 里使用范围值 (注意此处 n 的初值是从 1 开始而非 0。)
+ * <span v-for="n in 10">{{ n }}</span>
+ * 
+ * <template> 上的 v-for
+ * <ul>
+ *   <template v-for="item in items">
+ *     <li>{{ item.msg }}</li>
+ *     <li class="divider" role="presentation"></li>
+ *   </template>
+ * </ul>
+ * 
+ * v-for 与 v-if (v-if 比 v-for 的优先级更高)
+ * 不可處於同級，應當如此書寫
+ * <template v-for="todo in todos">
+ *   <li v-if="!todo.isComplete">
+ *     {{ todo.name }}
+ *   </li>
+ * </template>
+ * 
+ * 通过 key 管理状态 (为了给 Vue 一个提示，以便它可以跟踪每个节点的标识，从而重用和重新排序现有的元素，你需要为每个元素对应的块提供一个唯一的 key attribute)
+ * <div v-for="item in items" :key="item.id">
+ *   <!-- 内容 -->
+ * </div>
+ * <template v-for="todo in todos" :key="todo.name">
+ *   <li>{{ todo.name }}</li>
+ * </template>
+ * 
+ * 组件上使用 v-for
+ * <MyComponent v-for="item in items" :key="item.id" />
+ * 
+ * 数组变化侦测 -> 变更方法 (push(), pop(), shift(), unshift(), splice(), sort(), reverse())
+ * filter(), concat(), slice() 會返回新數組
+ * items.value = items.value.filter((item) => item.message.match(/Foo/))
+ * 
+ * 展示过滤或排序后的结果
+ * const numbers = ref([1, 2, 3, 4, 5])
+ * const evenNumbers = computed(() => {
+ *   return numbers.value.filter((n) => n % 2 === 0)
+ * })
+ * <li v-for="n in evenNumbers">{{ n }}</li>
+ * ---
+ * const sets = ref([
+ *   [1, 2, 3, 4, 5],
+ *   [6, 7, 8, 9, 10]
+ * ])
+ * function even(numbers) {
+ *   return numbers.filter((number) => number % 2 === 0)
+ * }
+ * <ul v-for="numbers in sets">
+ *   <li v-for="n in even(numbers)">{{ n }}</li>
+ * </ul>
+ * [在计算属性中使用 reverse() 和 sort() 的时候务必小心！这两个方法将变更原始数组，计算函数中不应该这么做。请在调用这些方法之前创建一个原数组的副本]
+ * - return numbers.reverse()
+ * + return [...numbers].reverse()
  */
 ```

@@ -527,3 +527,17 @@ const options = ref([
 <input v-model.trim="msg" />
  */
 ```
+
+## [生命周期](https://cn.vuejs.org/guide/essentials/lifecycle.html)
+
+```csharp
+/**
+(onMounted onUpdated onUnmounted)
+<script setup>
+import { onMounted } from 'vue'
+onMounted(() => {
+  console.log(`the component is now mounted.`)
+})
+</script>
+ */
+```

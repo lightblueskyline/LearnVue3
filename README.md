@@ -23,7 +23,7 @@ npm run dev
 npm build
 ```
 
-## [模板語法](https://cn.vuejs.org/guide/essentials/template-syntax.html)
+## [基础-模板語法](https://cn.vuejs.org/guide/essentials/template-syntax.html)
 
 ```csharp
 /**
@@ -86,7 +86,7 @@ v-on 指令，監聽 DOM 事件
  */
 ```
 
-## [响应式基础](https://cn.vuejs.org/guide/essentials/reactivity-fundamentals.html)
+## [基础-响应式基础](https://cn.vuejs.org/guide/essentials/reactivity-fundamentals.html)
 
 ```csharp
 /**
@@ -127,7 +127,7 @@ function mutateDeeply() {
  */
 ```
 
-## [计算属性](https://cn.vuejs.org/guide/essentials/computed.html)
+## [基础-计算属性](https://cn.vuejs.org/guide/essentials/computed.html)
 
 ```csharp
 /**
@@ -173,7 +173,7 @@ const fullName = computed({
  */
 ```
 
-## [Class 与 Style 绑定](https://cn.vuejs.org/guide/essentials/class-and-style.html)
+## [基础-Class 与 Style 绑定](https://cn.vuejs.org/guide/essentials/class-and-style.html)
 
 ```csharp
 /**
@@ -212,7 +212,7 @@ const styleObject = reactive({
  */
 ```
 
-## [条件渲染](https://cn.vuejs.org/guide/essentials/conditional.html)
+## [基础-条件渲染](https://cn.vuejs.org/guide/essentials/conditional.html)
 
 ```csharp
 /**
@@ -244,7 +244,7 @@ v-show (按条件显示一个元素)
  */
 ```
 
-## [列表渲染](https://cn.vuejs.org/guide/essentials/list.html)
+## [基础-列表渲染](https://cn.vuejs.org/guide/essentials/list.html)
 
 ```csharp
 /**
@@ -343,7 +343,7 @@ function even(numbers) {
  */
 ```
 
-## [事件处理](https://cn.vuejs.org/guide/essentials/event-handling.html)
+## [基础-事件处理](https://cn.vuejs.org/guide/essentials/event-handling.html)
 
 ```csharp
 /**
@@ -435,7 +435,7 @@ KeyboardEvent.key -> https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/
  */
 ```
 
-## [表单输入绑定](https://cn.vuejs.org/guide/essentials/forms.html)
+## [基础-表单输入绑定](https://cn.vuejs.org/guide/essentials/forms.html)
 
 ```csharp
 /**
@@ -528,7 +528,7 @@ const options = ref([
  */
 ```
 
-## [生命周期](https://cn.vuejs.org/guide/essentials/lifecycle.html)
+## [基础-生命周期](https://cn.vuejs.org/guide/essentials/lifecycle.html)
 
 ```csharp
 /**
@@ -542,7 +542,7 @@ onMounted(() => {
  */
 ```
 
-## [侦听器](https://cn.vuejs.org/guide/essentials/watchers.html)
+## [基础-侦听器](https://cn.vuejs.org/guide/essentials/watchers.html)
 
 ```csharp
 /**
@@ -642,7 +642,7 @@ watchEffect(async () => {
  */
 ```
 
-## [模板引用](https://cn.vuejs.org/guide/essentials/template-refs.html)
+## [基础-模板引用](https://cn.vuejs.org/guide/essentials/template-refs.html)
 
 ```csharp
 /**
@@ -691,5 +691,113 @@ onMounted(() => {
 <template>
   <Child ref="child" />
 </template>
+ */
+```
+
+## [基础-组件基础](https://cn.vuejs.org/guide/essentials/component-basics.html)
+
+```csharp
+/**
+定义一个组件 (一般会将 Vue 组件定义在一个单独的 .vue 文件中，这被叫做单文件组件 (简称 SFC)) ->
+<script setup>
+import { ref } from 'vue'
+const count = ref(0)
+</script>
+<template>
+  <button @click="count++">You clicked me {{ count }} times.</button>
+</template>
+
+传递 props ->
+<!-- BlogPost.vue -->
+<script setup>
+defineProps(['title'])
+</script>
+<template>
+  <h4>{{ title }}</h4>
+</template>
+---
+<BlogPost title="My journey with Vue" />
+<BlogPost title="Blogging with Vue" />
+<BlogPost title="Why Vue is so fun" />
+---
+const posts = ref([
+  { id: 1, title: 'My journey with Vue' },
+  { id: 2, title: 'Blogging with Vue' },
+  { id: 3, title: 'Why Vue is so fun' }
+])
+<BlogPost
+  v-for="post in posts"
+  :key="post.id"
+  :title="post.title"
+ />
+
+监听事件 (自定义事件系统) ->
+<script setup>
+import { ref } from 'vue'
+import BlogPost from './BlogPost.vue'
+const posts = ref([
+  { id: 1, title: 'My journey with Vue' },
+  { id: 2, title: 'Blogging with Vue' },
+  { id: 3, title: 'Why Vue is so fun' }
+])
+const postFontSize = ref(1)
+</script>
+<template>
+  <div :style="{ fontSize: postFontSize + 'em' }">
+    <BlogPost
+      v-for="post in posts"
+      :key="post.id"
+      :title="post.title"
+      @enlarge-text="postFontSize += 0.1"
+    ></BlogPost>
+  </div>
+</template>
+<!-- BlogPost.vue -->
+<script setup>
+defineProps(['title'])
+// 另一種定義方式
+<script setup>
+defineProps(['title'])
+defineEmits(['enlarge-text'])
+</script>
+<template>
+  <div class="blog-post">
+    <h4>{{ title }}</h4>
+    <button @click="$emit('enlarge-text')">Enlarge text</button>
+  </div>
+</template>
+
+通过插槽来分配内容 (可以通过 Vue 的自定义 <slot> 元素来实现) ->
+<script setup>
+import AlertBox from './AlertBox.vue'
+</script>
+<template>
+  <AlertBox>
+    Something bad happened.
+  </AlertBox>
+</template>
+<!-- AlertBox.vue -->
+<template>
+  <div class="alert-box">
+    <strong>Error!</strong>
+    <br/>
+    <slot />
+  </div>
+</template>
+<style scoped>
+.alert-box {
+  color: #666;
+  border: 1px solid red;
+  border-radius: 4px;
+  padding: 20px;
+  background-color: #f8f8f8;
+}
+strong {
+  color: red;
+}
+</style>
+
+动态组件 ->
+(通过 Vue 的 <component> 元素和特殊的 is attribute 实现)
  */
 ```

@@ -541,3 +541,103 @@ onMounted(() => {
 </script>
  */
 ```
+
+## [侦听器](https://cn.vuejs.org/guide/essentials/watchers.html)
+
+```csharp
+/**
+使用 watch 函數
+基本示例 ->
+<script setup>
+import { ref, watch } from 'vue'
+const question = ref('')
+const answer = ref('Questions usually contain a question mark. ;-)')
+const loading = ref(false)
+// 可以直接侦听一个 ref
+watch(question, async (newQuestion, oldQuestion) => {
+  if (newQuestion.includes('?')) {
+    loading.value = true
+    answer.value = 'Thinking...'
+    try {
+      const res = await fetch('https://yesno.wtf/api')
+      answer.value = (await res.json()).answer
+    } catch (error) {
+      answer.value = 'Error! Could not reach the API. ' + error
+    } finally {
+      loading.value = false
+    }
+  }
+})
+</script>
+<template>
+  <p>
+    Ask a yes/no question:
+    <input v-model="question" :disabled="loading" />
+  </p>
+  <p>{{ answer }}</p>
+</template>
+
+侦听数据源类型
+const x = ref(0)
+const y = ref(0)
+// 单个 ref
+watch(x, (newX) => {
+  console.log(`x is ${newX}`)
+})
+// getter 函数
+watch(
+  () => x.value + y.value,
+  (sum) => {
+    console.log(`sum of x + y is: ${sum}`)
+  }
+)
+// 多个来源组成的数组
+watch([x, () => y.value], ([newX, newY]) => {
+  console.log(`x is ${newX} and y is ${newY}`)
+})
+不能直接侦听响应式对象的属性值，例如 ->
+const obj = reactive({ count: 0 })
+// 错误，因为 watch() 得到的参数是一个 number
+watch(obj.count, (count) => {
+  console.log(`count is: ${count}`)
+})
+需要用一个返回该属性的 getter 函数
+// 提供一个 getter 函数
+watch(
+  () => obj.count,
+  (count) => {
+    console.log(`count is: ${count}`)
+  }
+)
+
+即时回调的侦听器 (可以通过传入 immediate: true 选项来强制侦听器的回调立即执行)
+watch(
+  source,
+  (newValue, oldValue) => {
+    // 立即执行，且当 `source` 改变时再次执行
+  },
+  { immediate: true }
+)
+
+watchEffect() ->
+const todoId = ref(1)
+const data = ref(null)
+watch(
+  todoId,
+  async () => {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/todos/${todoId.value}`
+    )
+    data.value = await response.json()
+  },
+  { immediate: true }
+)
+---
+watchEffect(async () => {
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/todos/${todoId.value}`
+  )
+  data.value = await response.json()
+})
+ */
+```

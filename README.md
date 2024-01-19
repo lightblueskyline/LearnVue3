@@ -641,3 +641,55 @@ watchEffect(async () => {
 })
  */
 ```
+
+## [模板引用](https://cn.vuejs.org/guide/essentials/template-refs.html)
+
+```csharp
+/**
+使用特殊的 ref attribute (只可以在组件挂载后才能访问模板引用)
+<input ref="input">
+
+访问模板引用 ->
+<script setup>
+import { ref, onMounted } from 'vue'
+// 声明一个 ref 来存放该元素的引用
+// 必须和模板里的 ref 同名
+const input = ref(null)
+onMounted(() => {
+  input.value.focus()
+})
+</script>
+<template>
+  <input ref="input" />
+</template>
+
+v-for 中的模板引用 ->
+<script setup>
+import { ref, onMounted } from 'vue'
+const list = ref([1, 2, 3])
+const itemRefs = ref([])
+onMounted(() => console.log(itemRefs.value))
+</script>
+
+<template>
+  <ul>
+    <li v-for="item in list" ref="itemRefs">
+      {{ item }}
+    </li>
+  </ul>
+</template>
+
+组件上的 ref ->
+<script setup>
+import { ref, onMounted } from 'vue'
+import Child from './Child.vue'
+const child = ref(null)
+onMounted(() => {
+  // child.value 是 <Child /> 组件的实例
+})
+</script>
+<template>
+  <Child ref="child" />
+</template>
+ */
+```

@@ -12,6 +12,8 @@ git remote add origin https://github.com/lightblueskyline/LearnVue3.git
 git push -u origin master
 ```
 
+## [深度指南](https://cn.vuejs.org/guide/introduction.html)
+
 ## [快速上手](https://cn.vuejs.org/guide/quick-start.html)
 
 ```ps
